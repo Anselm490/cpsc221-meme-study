@@ -11,7 +11,7 @@ export default function FlashCard({ card, onClick, isCompleted }) {
   return (
     <div
       onClick={handleClick}
-      className={`relative p-6 m-4 shadow-xl rounded-2xl text-center text-lg cursor-pointer min-h-[200px] flex items-center justify-center transition
+      className={`relative w-full h-[calc(100vh-200px)] p-6 mx-auto shadow-xl rounded-2xl text-center text-lg cursor-pointer flex items-center justify-center transition
       ${showAnswer ? "bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-100" : "bg-white dark:bg-gray-800 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"}
       `}
     >

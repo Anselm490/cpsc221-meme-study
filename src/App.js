@@ -86,13 +86,17 @@ function App() {
       </div>
 
       {/* Flashcards */}
-      <div {...useSwipeable({
-        onSwipedUp: () => setCurrentIndex((prev) => Math.min(filteredCards.length - 1, prev + 1)),
-        onSwipedDown: () => setCurrentIndex((prev) => Math.max(0, prev - 1)),
-        preventScrollOnSwipe: true,
-        trackTouch: true,
-        trackMouse: false,
-      })}>
+      <div
+        {...useSwipeable({
+          onSwipedUp: () => setCurrentIndex((prev) => Math.min(filteredCards.length - 1, prev + 1)),
+          onSwipedDown: () => setCurrentIndex((prev) => Math.max(0, prev - 1)),
+          preventScrollOnSwipe: true,
+          trackTouch: true,
+          trackMouse: false,
+        })}
+        className="transition-transform duration-500 ease-in-out"
+        style={{ transform: `translateY(0)` }} // placeholder in case we animate later
+      >
         <FlashCard
           card={filteredCards[currentIndex]}
           onClick={() => handleCardClick(filteredCards[currentIndex]?.id)}
