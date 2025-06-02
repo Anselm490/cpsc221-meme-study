@@ -118,11 +118,13 @@ function App() {
         }`}
         style={{ transform: `translateY(0)` }} // placeholder in case we animate later
       >
-        <FlashCard
-          card={filteredCards[currentIndex]}
-          onClick={() => handleCardClick(filteredCards[currentIndex]?.id)}
-          isCompleted={completed.includes(filteredCards[currentIndex]?.id)}
-        />
+        {filteredCards[currentIndex] && (
+          <FlashCard
+            card={filteredCards[currentIndex]}
+            onClick={() => handleCardClick(filteredCards[currentIndex]?.id)}
+            isCompleted={completed.includes(filteredCards[currentIndex]?.id)}
+          />
+        )}
       </div>
 
     {/* Navigation buttons */}
