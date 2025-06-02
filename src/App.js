@@ -30,6 +30,24 @@ function App() {
 
   const [animationDirection, setAnimationDirection] = useState(''); // '' | 'up' | 'down'
 
+  const handlers = useSwipeable({
+          onSwipedUp: () => {
+            if (currentIndex < filteredCards.length - 1) {
+              setAnimationDirection('up');
+              setCurrentIndex((prev) => prev + 1);
+            }
+          },
+          onSwipedDown: () => {
+            if (currentIndex > 0) {
+              setAnimationDirection('down');
+              setCurrentIndex((prev) => prev - 1);
+            }
+          },
+          preventScrollOnSwipe: true,
+          trackTouch: true,
+          trackMouse: false,
+        });
+
   return (
   <div className={darkMode ? 'dark' : ''}>
     <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-8 transition-colors">
@@ -89,25 +107,8 @@ function App() {
 
       {/* Flashcards */}
       <div
-        {...useSwipeable({
-          onSwipedUp: () => {
-            if (currentIndex < filteredCards.length - 1) {
-              setAnimationDirection('up');
-              setCurrentIndex((prev) => prev + 1);
-            }
-          },
-          onSwipedDown: () => {
-            if (currentIndex > 0) {
-              setAnimationDirection('down');
-              setCurrentIndex((prev) => prev - 1);
-            }
-          },
-          preventScrollOnSwipe: true,
-          trackTouch: true,
-          trackMouse: false,
-        })}
-        key={filteredCards[currentIndex]?.id} // 🔑 IMPORTANT for transition
         {...handlers}
+        key={filteredCards[currentIndex]?.id} // 🔑 IMPORTANT for transition
         className={`transition-all duration-300 ease-in-out ${
           animationDirection === 'up'
             ? 'animate-slide-up'
