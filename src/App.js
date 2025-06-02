@@ -28,6 +28,8 @@ function App() {
   ? cards.filter(c => c.topic === selectedTopic)
   : cards;
 
+  const [animationDirection, setAnimationDirection] = useState(''); // '' | 'up' | 'down'
+
   return (
   <div className={darkMode ? 'dark' : ''}>
     <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-8 transition-colors">
@@ -88,14 +90,31 @@ function App() {
       {/* Flashcards */}
       <div
         {...useSwipeable({
-          onSwipedUp: () => setCurrentIndex((prev) => Math.min(filteredCards.length - 1, prev + 1)),
-          onSwipedDown: () => setCurrentIndex((prev) => Math.max(0, prev - 1)),
+          onSwipedUp: () => {
+            if (currentIndex < filteredCards.length - 1) {
+              setAnimationDirection('up');
+              setCurrentIndex((prev) => prev + 1);
+            }
+          },
+          onSwipedDown: () => {
+            if (currentIndex > 0) {
+              setAnimationDirection('down');
+              setCurrentIndex((prev) => prev - 1);
+            }
+          },
           preventScrollOnSwipe: true,
           trackTouch: true,
           trackMouse: false,
         })}
         key={filteredCards[currentIndex]?.id} // 🔑 IMPORTANT for transition
-        className="transition-transform duration-500 ease-in-out"
+        {...handlers}
+        className={`transition-all duration-300 ease-in-out ${
+          animationDirection === 'up'
+            ? 'animate-slide-up'
+            : animationDirection === 'down'
+            ? 'animate-slide-down'
+            : ''
+        }`}
         style={{ transform: `translateY(0)` }} // placeholder in case we animate later
       >
         <FlashCard
