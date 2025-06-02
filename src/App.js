@@ -3,6 +3,7 @@ import cards from './data/cards';
 import FlashCard from './components/FlashCard';
 import ProgressBar from './components/ProgressBar';
 import { useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
 
 // Helper to extract all topics from card data
 const allTopics = [...new Set(cards.map(card => card.topic))];
@@ -85,11 +86,19 @@ function App() {
       </div>
 
       {/* Flashcards */}
-      <FlashCard
-      card={filteredCards[currentIndex]}
-      onClick={() => handleCardClick(filteredCards[currentIndex]?.id)}
-      isCompleted={completed.includes(filteredCards[currentIndex]?.id)}
-    />
+      <div {...useSwipeable({
+        onSwipedUp: () => setCurrentIndex((prev) => Math.min(filteredCards.length - 1, prev + 1)),
+        onSwipedDown: () => setCurrentIndex((prev) => Math.max(0, prev - 1)),
+        preventScrollOnSwipe: true,
+        trackTouch: true,
+        trackMouse: false,
+      })}>
+        <FlashCard
+          card={filteredCards[currentIndex]}
+          onClick={() => handleCardClick(filteredCards[currentIndex]?.id)}
+          isCompleted={completed.includes(filteredCards[currentIndex]?.id)}
+        />
+      </div>
 
     {/* Navigation buttons */}
     <div className="flex justify-center gap-4 mt-6">
