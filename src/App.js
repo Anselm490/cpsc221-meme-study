@@ -105,7 +105,7 @@ function App() {
       </div>
 
     {/* Navigation buttons */}
-    <div className="flex justify-center gap-4 mt-6">
+    {/* <div className="flex justify-center gap-4 mt-6">
       <button
         onClick={() => setCurrentIndex((prev) => Math.max(0, prev - 1))}
         className="px-4 py-2 rounded bg-gray-300 dark:bg-gray-700 text-black dark:text-white font-semibold hover:bg-gray-400 dark:hover:bg-gray-600 transition"
@@ -119,7 +119,7 @@ function App() {
       >
         ⬇️ Next
       </button>
-    </div>
+    </div> */}
     </div>
   </div>
 );
