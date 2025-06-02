@@ -94,6 +94,7 @@ function App() {
           trackTouch: true,
           trackMouse: false,
         })}
+        key={filteredCards[currentIndex]?.id} // 🔑 IMPORTANT for transition
         className="transition-transform duration-500 ease-in-out"
         style={{ transform: `translateY(0)` }} // placeholder in case we animate later
       >
