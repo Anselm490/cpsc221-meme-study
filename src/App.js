@@ -45,7 +45,7 @@ function App() {
           },
           preventScrollOnSwipe: true,
           trackTouch: true,
-          trackMouse: false,
+          trackMouse: true,
         });
 
   return (
