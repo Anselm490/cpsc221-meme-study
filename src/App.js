@@ -3,7 +3,7 @@ import cards from './data/cards';
 import FlashCard from './components/FlashCard';
 import ProgressBar from './components/ProgressBar';
 import { useSwipeable } from 'react-swipeable';
-import NotesView from './components/Notesview';
+import NotesView from './components/NotesView';
 
 const allTopics = [...new Set(cards.map(card => card.topic))];
 
@@ -161,6 +161,10 @@ function App() {
 
           {activeView === "askAI" && (
             <div className="text-white">Ask AI feature coming soon...</div>
+          )}
+
+          {activeView === "notes" && (
+            <NotesView />
           )}
 
           {activeView === "notes" && (
