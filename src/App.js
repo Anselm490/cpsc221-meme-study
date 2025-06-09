@@ -50,35 +50,34 @@ function App() {
   return (
     <div className={darkMode ? 'dark' : ''}>
       <div className="relative bg-gray-100 dark:bg-gray-900 min-h-screen transition-colors">
-
-        {/* Toggle Sidebar Button (positioned safely below header) */}
-        <div className="fixed top-4 left-4 z-50">
+        {/* Menu Button */}
+        <div className="fixed z-50 top-4 left-4">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="bg-blue-600 text-white px-4 py-2 rounded shadow-md hover:bg-blue-700"
+            className="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700"
           >
             ☰ Menu
           </button>
         </div>
 
-        {/* Sidebar Backdrop + Animated Drawer */}
+        {/* Sidebar + Backdrop */}
         <div
-          className={`fixed inset-0 z-40 transition-opacity duration-300 ${
-            sidebarOpen ? 'visible opacity-100' : 'invisible opacity-0'
-          }`}
+          className={`fixed inset-0 z-40 ${sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
         >
+          {/* Dim Background */}
           <div
-            className="absolute inset-0 bg-black bg-opacity-40 backdrop-blur-sm"
+            className={`absolute inset-0 transition-opacity duration-300 bg-black backdrop-blur-sm ${sidebarOpen ? 'opacity-40' : 'opacity-0'}`}
             onClick={() => setSidebarOpen(false)}
           ></div>
 
+          {/* Sidebar Panel */}
           <div
             className={`absolute top-0 left-0 h-full w-64 bg-white dark:bg-gray-800 text-black dark:text-white shadow-xl p-6 transform transition-transform duration-300 ease-in-out ${
               sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 className="text-xl font-bold mb-6">Study App</h2>
+            <h2 className="text-xl font-bold mb-6 mt-10">Study App</h2>
             <button onClick={() => { setActiveView("flashcards"); setSidebarOpen(false); }} className="block w-full text-left mb-4 hover:bg-blue-100 dark:hover:bg-blue-900 px-3 py-2 rounded">📇 Flashcards</button>
             <button onClick={() => { setActiveView("askAI"); setSidebarOpen(false); }} className="block w-full text-left mb-4 hover:bg-blue-100 dark:hover:bg-blue-900 px-3 py-2 rounded">🤖 Ask AI</button>
             <button onClick={() => { setActiveView("notes"); setSidebarOpen(false); }} className="block w-full text-left mb-4 hover:bg-blue-100 dark:hover:bg-blue-900 px-3 py-2 rounded">📝 Notes</button>
@@ -107,7 +106,6 @@ function App() {
           </button>
         </div>
 
-        {/* Topic filter buttons */}
         {activeView === "flashcards" && (
           <div className="flex justify-center gap-2 flex-wrap mb-6">
             <button
@@ -120,7 +118,6 @@ function App() {
             >
               All
             </button>
-
             {allTopics.map(topic => (
               <button
                 key={topic}
@@ -137,7 +134,6 @@ function App() {
           </div>
         )}
 
-        {/* Main Content View */}
         <div className="px-4">
           {activeView === "flashcards" && (
             <div
