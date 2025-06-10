@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { marked } from 'marked';
+import TimestampButton from './TimestampButton';
 
 function NotesView() {
   const [messages, setMessages] = useState(() => {
@@ -17,21 +18,22 @@ function NotesView() {
     localStorage.setItem('notesMessages', JSON.stringify(messages));
   }, [messages]);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  const handleSend = (msg) => {
+    const content = typeof msg === 'string' ? msg : input;
+    if (!content.trim()) return;
     if (editId !== null) {
       setMessages(messages.map(msg => {
         if (msg.id !== editId) return msg;
-        if (msg.text === input) return msg;
-        return { ...msg, text: input, editCount: (msg.editCount || 0) + 1 };
+        if (msg.text === content) return msg;
+        return { ...msg, text: content, editCount: (msg.editCount || 0) + 1 };
       }));
       setEditId(null);
     } else {
       const newMessage = {
         id: Date.now(),
-        text: input,
+        text: content,
         sender,
-        timestamp: new Date().toLocaleTimeString(),
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
         replyTo,
         editCount: 0,
         reactions: {}
@@ -181,6 +183,7 @@ function NotesView() {
       )}
 
       <div className="flex items-center gap-2">
+        <TimestampButton onSend={handleSend} />
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -192,7 +195,7 @@ function NotesView() {
           }}
           placeholder="Type a note and hit Enter..."
           className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none"
-         rows={2}
+          rows={2}
         />
         <button
           onClick={handleSend}
